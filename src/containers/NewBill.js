@@ -17,28 +17,49 @@ export default class NewBill {
   }
   handleChangeFile = e => {
     e.preventDefault()
-    const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-    const filePath = e.target.value.split(/\\/g)
-    const fileName = filePath[filePath.length-1]
-    const formData = new FormData()
-    const email = JSON.parse(localStorage.getItem("user")).email
-    formData.append('file', file)
-    formData.append('email', email)
+    const file = this.document.querySelector(`input[data-testid="file"]`).files[0];
+    var fileInput = document.querySelector(`input[data-testid="file"]`);
+    var errorData = document.querySelector(`#errorFile`);
 
-    this.store
-      .bills()
-      .create({
-        data: formData,
-        headers: {
-          noContentType: true
-        }
-      })
-      .then(({fileUrl, key}) => {
-        console.log(fileUrl)
-        this.billId = key
-        this.fileUrl = fileUrl
-        this.fileName = fileName
-      }).catch(error => console.error(error))
+    console.log(errorData)
+    
+    if (errorData !== null) {
+        console.log("delete error");
+        var errorID = document.querySelector("#errorFile");
+        errorID.parentNode.removeChild(errorID);
+    }
+    if (file.name.match(/png|jpg|jpeg/)) {
+        console.log("file ok");
+        const filePath = e.target.value.split(/\\/g)
+        const fileName = filePath[filePath.length-1]
+        const formData = new FormData()
+        const email = JSON.parse(localStorage.getItem("user")).email
+        formData.append('file', file)
+        formData.append('email', email)
+
+        this.store
+        .bills()
+        .create({
+            data: formData,
+            headers: {
+            noContentType: true
+            }
+        })
+        .then(({fileUrl, key}) => {
+            this.billId = key
+            this.fileUrl = fileUrl
+            this.fileName = fileName
+        }).catch(error => console.error(error))
+    }
+    if (!file.name.match(/png|jpg|jpeg/)){
+        var errorMessage = document.createElement("div");
+        errorMessage.setAttribute("id", "errorFile")
+        var errorContent = document.createTextNode('format du fichier incorrect');
+
+        errorMessage.appendChild(errorContent);
+        fileInput.parentNode.insertBefore(errorMessage, fileInput.nextSibling);
+    }
+    
   }
   handleSubmit = e => {
     e.preventDefault()

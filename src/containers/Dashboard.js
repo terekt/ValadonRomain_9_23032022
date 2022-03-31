@@ -53,7 +53,8 @@ export const card = (bill) => {
 }
 
 export const cards = (bills) => {
-  return bills && bills.length ? bills.map(bill => card(bill)).join("") : ""
+  return bills && bills.length ? 
+  bills.map(bill => card(bill)).join("") : ""
 }
 
 export const getStatus = (index) => {
@@ -86,6 +87,7 @@ export default class {
   }
 
   handleEditTicket(e, bill, bills) {
+      console.log(this.counter)
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
     if (this.counter % 2 === 0) {
@@ -146,8 +148,13 @@ export default class {
     }
 
     bills.forEach(bill => {
+        $(`#open-bill${bill.id}`).off("click");
+        $(`#open-bill${bill.id}`).on("click", (e) => this.handleEditTicket(e, bill, bills));
+      })
+
+    /*bills.forEach(bill => {
       $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
-    })
+    })*/
 
     return bills
 
