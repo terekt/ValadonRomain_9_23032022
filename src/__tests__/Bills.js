@@ -158,7 +158,6 @@ describe("Given I am a user connected as an employee", () => {
                         },
                     };
                 });
-
                 window.onNavigate(ROUTES_PATH.Bills);
                 await new Promise(process.nextTick);
                 const message = await screen.getByText(/Erreur 500/);
