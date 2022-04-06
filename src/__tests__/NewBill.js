@@ -42,11 +42,6 @@ describe("Given I am connected as an employee", () => {
         });
 
         describe('When I click on button change file', () => {
-            beforeEach(() => {
-                const html = NewBillUI();
-                document.body.innerHTML = html;
-            });
-
             test('Recognize if a file is a jpeg', () => {
                 const onNavigate = (pathname) => { document.body.innerHTML = ROUTES({ pathname }) };
 
