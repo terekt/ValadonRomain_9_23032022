@@ -152,10 +152,6 @@ export default class {
         $(`#open-bill${bill.id}`).on("click", (e) => this.handleEditTicket(e, bill, bills));
       })
 
-    /*bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
-    })*/
-
     return bills
 
   }

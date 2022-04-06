@@ -72,8 +72,8 @@ describe("Given I am connected as an employee", () => {
             eyebutton.addEventListener("click", handleClickIconEye)
             userEvent.click(eyebutton);
 
-            /*const modaleFile = document.querySelector(`div[class="modal fade show"]`)
-            expect(modaleFile.classList.contains("show")).toBeTruthy()*/
+            expect(handleClickIconEye).toHaveBeenCalled()
+            
             const modaleFile = screen.getByTestId('modaleFile')
             expect(modaleFile).toBeTruthy()
         })
